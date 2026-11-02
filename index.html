@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>André Silva Peixoto de Souza | Simulation and Aerodynamics Engineering</title>
+  <meta name="description" content="André Silva Peixoto de Souza, mechanical engineering student (UFSJ and Toulouse INP-ENSEEIHT). CFD, FEA and aerodynamics for motorsport and aerospace. Former Project Manager of a Formula SAE team of 50+ members.">
+  <style>
+    :root {
+      --bg: #fafaf8;
+      --text: #141414;
+      --muted: #6b6b6b;
+      --line: #dcdcd7;
+      --accent: #8a1c1c;
+      --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+      --sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; border-bottom: 1px solid var(--line); transition: border-color .2s, color .2s; }
+    a:hover { color: var(--accent); border-color: var(--accent); }
+
+    .wrap { max-width: 880px; margin: 0 auto; padding: 0 28px; }
+
+    nav { border-bottom: 1px solid var(--line); position: sticky; top: 0; background: rgba(250,250,248,0.94); backdrop-filter: blur(6px); z-index: 10; }
+    nav .wrap { display: flex; justify-content: space-between; align-items: center; padding-top: 16px; padding-bottom: 16px; gap: 20px; }
+    nav .brand { font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.04em; border: none; white-space: nowrap; }
+    nav ul { list-style: none; display: flex; gap: 20px; flex-wrap: wrap; justify-content: flex-end; }
+    nav ul a { font-family: var(--mono); font-size: 0.76rem; color: var(--muted); border: none; }
+    nav ul a:hover { color: var(--accent); }
+
+    header { padding: 100px 0 56px; }
+    .kicker { font-family: var(--mono); font-size: 0.78rem; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; }
+    h1 { font-size: clamp(2.1rem, 6vw, 3.5rem); font-weight: 600; letter-spacing: -0.02em; line-height: 1.1; margin: 18px 0 22px; }
+    .lead { font-size: 1.12rem; color: var(--muted); max-width: 680px; }
+    .meta { margin-top: 28px; font-family: var(--mono); font-size: 0.8rem; color: var(--muted); display: flex; flex-wrap: wrap; gap: 8px 28px; }
+
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin-bottom: 8px; }
+    .stat { padding: 22px 20px 22px 0; }
+    .stat + .stat { padding-left: 20px; border-left: 1px solid var(--line); }
+    .stat .num { font-size: 1.35rem; font-weight: 600; letter-spacing: -0.01em; }
+    .stat .cap { font-family: var(--mono); font-size: 0.74rem; color: var(--muted); margin-top: 4px; line-height: 1.45; }
+    @media (max-width: 720px) { .stat + .stat { border-left: none; padding-left: 0; border-top: 1px solid var(--line); } }
+
+    section { border-top: 1px solid var(--line); padding: 48px 0; scroll-margin-top: 50px; }
+    .row { display: grid; grid-template-columns: 180px 1fr; gap: 32px; }
+    .label { font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); padding-top: 4px; }
+    @media (max-width: 720px) { .row { grid-template-columns: 1fr; gap: 14px; } nav .wrap { flex-direction: column; align-items: flex-start; gap: 8px; } nav ul { justify-content: flex-start; gap: 14px; } nav { position: static; } }
+
+    p + p { margin-top: 14px; }
+
+    .portrait { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; display: block; margin-top: 20px; border: 1px solid var(--line); }
+    @media (max-width: 720px) { .portrait { width: 120px; height: 120px; margin-top: 0; } }
+
+    .group { margin-bottom: 38px; }
+    .group:last-child { margin-bottom: 0; }
+    .group-title { font-size: 1.1rem; font-weight: 600; }
+    .group-sub { font-family: var(--mono); font-size: 0.78rem; color: var(--muted); margin-bottom: 16px; }
+
+    .item { margin-bottom: 24px; padding-left: 16px; border-left: 2px solid var(--line); }
+    .item:last-child { margin-bottom: 0; }
+    .item h3 { font-size: 1rem; font-weight: 600; }
+    .item .where { color: var(--muted); font-size: 0.92rem; }
+    .item .when { font-family: var(--mono); font-size: 0.76rem; color: var(--muted); margin-top: 2px; }
+    .item p { margin-top: 8px; }
+    .item ul { margin-top: 8px; padding-left: 18px; }
+    .item li { margin-bottom: 4px; }
+    .item .tools { margin-top: 10px; font-family: var(--mono); font-size: 0.78rem; color: var(--muted); }
+
+    .figs { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 16px; }
+    .figs figure.wide { grid-column: 1 / -1; }
+    @media (max-width: 560px) { .figs { grid-template-columns: 1fr; } }
+    figure img { width: 100%; height: auto; display: block; border: 1px solid var(--line); background: #fff; }
+    figcaption { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); margin-top: 6px; line-height: 1.5; }
+
+    .kv { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--line); margin-top: 16px; }
+    @media (max-width: 560px) { .kv { grid-template-columns: 1fr; } }
+    .kv > div { padding: 14px 16px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); margin-right: -1px; margin-bottom: -1px; }
+    .kv .k { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); letter-spacing: 0.04em; text-transform: uppercase; }
+    .kv .v { font-size: 1.2rem; font-weight: 600; margin-top: 2px; }
+    .kv .n { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); margin-top: 2px; line-height: 1.4; }
+    .note { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); margin-top: 8px; }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tags span { font-family: var(--mono); font-size: 0.8rem; border: 1px solid var(--line); padding: 4px 11px; border-radius: 3px; }
+
+    .skills-group { margin-bottom: 22px; }
+    .skills-group:last-child { margin-bottom: 0; }
+    .skills-group h4 { font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; }
+
+    .langs { list-style: none; }
+    .langs li { display: flex; justify-content: space-between; border-bottom: 1px solid var(--line); padding: 8px 0; max-width: 420px; }
+    .langs li span:last-child { font-family: var(--mono); font-size: 0.8rem; color: var(--muted); }
+
+    .btn { display: inline-block; font-family: var(--mono); font-size: 0.8rem; border: 1px solid var(--text); padding: 8px 16px; margin-top: 18px; }
+    .btn:hover { background: var(--text); color: var(--bg); border-color: var(--text); }
+
+    footer { border-top: 1px solid var(--line); padding: 32px 0 56px; font-family: var(--mono); font-size: 0.75rem; color: var(--muted); }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="wrap">
+      <a class="brand" href="#top">André Peixoto</a>
+      <ul>
+        <li><a href="#profile">Profile</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="wrap" id="top">
+
+    <header>
+      <p class="kicker">CFD, FEA and aerodynamics</p>
+      <h1>André Silva Peixoto de Souza</h1>
+      <p class="lead">
+        Mechanical engineering student in a double-degree program at ENSEEIHT (Toulouse INP),
+        focused on numerical simulation and aerodynamics for motorsport and aerospace.
+        Former Project Manager of a Formula SAE team of more than 50 members.
+      </p>
+      <div class="meta">
+        <span>Toulouse, France</span>
+        <span>UFSJ, Brazil</span>
+        <span>Seeking internship and PFE</span>
+      </div>
+    </header>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="num">40 to 29 kg</div>
+        <div class="cap">Formula SAE chassis mass, FDR-05 to FDR-06, FEA-led redesign</div>
+      </div>
+      <div class="stat">
+        <div class="num">50+ members</div>
+        <div class="cap">Coordinated across 9 sectors as Project Manager</div>
+      </div>
+      <div class="stat">
+        <div class="num">6th overall</div>
+        <div class="cap">Fórmula SAE Brasil 2025, the team's best result. In 2026: 2nd in Cost and Business</div>
+      </div>
+      <div class="stat">
+        <div class="num">126 MPa</div>
+        <div class="cap">Tensile strength reached in papaya-fibre bio-composite laminates</div>
+      </div>
+    </div>
+
+    <section id="profile">
+      <div class="row">
+        <div>
+          <div class="label">Profile</div>
+          <img class="portrait" src="images/andre.jpg" width="342" height="342" loading="lazy"
+               alt="Portrait of André Silva Peixoto de Souza">
+        </div>
+        <div>
+          <p>
+            I am a Brazilian mechanical engineering student at the Federal University of São João del-Rei (UFSJ),
+            currently in a two-year double-degree program at ENSEEIHT, Toulouse INP, in the MF2E department with the
+            FEP specialization: aerodynamics, numerical simulation and fluid mechanics.
+          </p>
+          <p>
+            My core strength is simulation validated against experiments. In the Formula SAE team Fórmula Del-Racing,
+            I ran structural, modal and thermal analyses of the chassis, brake discs and drivetrain components in
+            Altair HyperWorks, ANSYS and ANSYS Fluent, and helped bring the chassis from 40 kg to 29 kg.
+            I then became Project Manager, coordinating more than 50 members across nine sectors.
+          </p>
+          <p>
+            What sets me apart is the combination of technical depth and leadership. In undergraduate research I
+            designed and tested bio-composite laminates with a statistical approach, and I led the commercial area of an
+            engineering junior company, from prospecting to contract closing. This gives me a practical view of how
+            engineering decisions meet clients, budgets and deadlines.
+          </p>
+          <p>
+            I am looking for internships and end-of-studies internships (PFE) in aerodynamics, CFD, numerical simulation,
+            and motorsport or aerospace engineering, in France and Europe.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="row">
+        <div class="label">Experience</div>
+        <div>
+
+          <div class="group">
+            <div class="group-title">CITeC, Centre for Innovation and Technology in Composite Materials</div>
+            <div class="group-sub">UFSJ, São João del-Rei, Brazil</div>
+            <div class="item">
+              <h3>Undergraduate Researcher (Scientific Initiation), Sustainable Composites</h3>
+              <div class="when">September 2025 to September 2026</div>
+              <p>
+                Mechanical characterization of laminates made of castor-oil polyurethane resin reinforced with papaya
+                stem bast fibres, a fully plant-based composite.
+              </p>
+              <ul>
+                <li>Fabricated laminates by hand lay-up with cold uniaxial compaction, using fibre layers extracted by water retting without chemical treatment</li>
+                <li>Designed a 2 x 3 factorial experiment (fibre layer type and reinforcement morphology) and tested 44 flexural and 38 tensile specimens to ASTM D790 and D638 standards</li>
+                <li>Analysed the results with two-factor ANOVA and Tukey tests in Minitab (5% significance), showing that reinforcement morphology is the dominant factor: random short fibres lose 60 to 90% of strength and stiffness, while alternating fibre holes do not reduce either significantly</li>
+                <li>Reached up to 126 MPa tensile strength and 20.4 GPa tensile modulus with continuous fibre</li>
+              </ul>
+              <div class="tools">Minitab, ASTM D638, ASTM D790, Instron 23100 (flexural tests)</div>
+            </div>
+          </div>
+
+          <div class="group">
+            <div class="group-title">Fórmula Del-Racing UFSJ</div>
+            <div class="group-sub">Formula SAE team, São João del-Rei, Brazil</div>
+
+            <div class="item">
+              <h3>Project Manager</h3>
+              <div class="when">August 2025 to May 2026</div>
+              <p>
+                Responsible for the overall coordination of the Formula SAE team's entire project, integrating the
+                technical sectors to meet deadlines, performance targets and competition requirements.
+              </p>
+              <ul>
+                <li>Coordinated more than 50 members across nine sectors: suspension, engine, transmission, chassis, brakes, aerodynamics, simulation, marketing and electrical</li>
+                <li>Managed the team's transition from 13-inch to 10-inch wheels across the technical sectors</li>
+                <li>Managed the team's campaign at the 21st Fórmula SAE Brasil competition (2025): 6th place overall, the team's best result</li>
+                <li>Coordinated the FDR-06 project through to the 22nd Fórmula SAE Brasil competition (2026): 2nd in Cost and Business, 5th in Acceleration and Skid Pad, 12th overall</li>
+                <li>Led strategic planning and tracked the vehicle development schedule</li>
+                <li>Made technical decisions together with each sector lead, balancing engineering constraints against competitiveness goals</li>
+              </ul>
+              <div class="figs">
+                <figure class="wide">
+                  <img src="images/team-2025.jpg" width="1046" height="700" loading="lazy"
+                       alt="Group photo of the Fórmula Del-Racing UFSJ team on the track at the 2025 competition">
+                  <figcaption>Fórmula Del-Racing UFSJ team at Fórmula SAE Brasil 2025.</figcaption>
+                </figure>
+              </div>
+            </div>
+
+            <div class="item">
+              <h3>Simulation Sector Member (FEA)</h3>
+              <div class="when">February 2025 to March 2026</div>
+              <p>
+                Member of the finite element analysis sector, running structural, modal and thermal analyses of
+                critical vehicle components.
+              </p>
+              <ul>
+                <li>1D and 2D structural simulations of the tubular chassis, focused on torsional stiffness and validated against physical torsion tests</li>
+                <li>Led, together with the sector team, the design changes that took the chassis from 40 kg down to 29 kg</li>
+                <li>Heat dissipation and thermal load analysis of the brake disc</li>
+                <li>Structural simulations of the rear sprocket, wheel upright and half-shaft under real track conditions</li>
+                <li>Mass optimization studies on the rear sprocket, brake disc and differential support, reducing weight without compromising safety or performance</li>
+              </ul>
+              <div class="tools">Altair HyperWorks, ANSYS, ANSYS Fluent</div>
+            </div>
+
+            <div class="item">
+              <h3>Simulation Sector Trainee</h3>
+              <div class="when">November 2024 to February 2025</div>
+              <p>
+                Developed the team's first 2D simulation of the prototype chassis, comparing structural deformation
+                results with the traditional 1D simulation and the data from the workshop torsion test.
+              </p>
+              <p>
+                This pioneering initiative increased the fidelity of the chassis analysis and enabled cross-validation
+                between computer simulation and physical testing, improving the precision of design and sizing decisions.
+              </p>
+            </div>
+          </div>
+
+          <div class="group">
+            <div class="group-title">Universidade Federal de São João del-Rei (UFSJ)</div>
+            <div class="group-sub">São João del-Rei, Brazil</div>
+            <div class="item">
+              <h3>Teaching Assistant, Machine Elements I</h3>
+              <div class="when">2024 to 2025</div>
+              <p>Supported students in the sizing of shafts, bearings and mechanical transmissions.</p>
+              <ul>
+                <li>Led tutorial sessions for the Machine Elements I course</li>
+                <li>Helped students solve and review exercises</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="group">
+            <div class="group-title">GEP-LASID, Dynamic Systems Laboratory Study and Research Group</div>
+            <div class="group-sub">São João del-Rei, Brazil</div>
+            <div class="item">
+              <h3>Research Group Member, Predictive Maintenance</h3>
+              <div class="when">August 2022 to December 2023</div>
+              <p>
+                Worked on predictive maintenance techniques based on mechanical vibration analysis to diagnose
+                faults in rotating machinery.
+              </p>
+              <ul>
+                <li>Collected vibration data in the laboratory using accelerometers and the SKF Microlog GX analyzer, identifying anomalies such as unbalance, misalignment and bearing faults</li>
+                <li>Processed and analyzed signals in the time and frequency domains</li>
+                <li>Analyzed greases and lubricating oils, correlating lubricant condition with the vibrational behavior of the equipment</li>
+                <li>Contributed to studies and tests on the reliability of industrial equipment</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="group">
+            <div class="group-title">Ômega Júnior</div>
+            <div class="group-sub">Mechanical engineering junior company, UFSJ</div>
+
+            <div class="item">
+              <h3>Sales Manager (Closer)</h3>
+              <div class="when">January 2023 to September 2023</div>
+              <p>
+                Led the company's sales operations: client prospecting, commercial proposals, contract closing and
+                sales funnel management. Designed and implemented direct sales strategies focused on sustainable
+                results and value for clients.
+              </p>
+              <ul>
+                <li>Managed technical projects from prospecting to final delivery</li>
+                <li>Led the sales team and tracked individual performance</li>
+                <li>Structured and improved the commercial process, integrating CRM tools to strengthen client relationships</li>
+                <li>Defined and executed business strategies aimed at the company's growth</li>
+                <li>Handled external commercial communication, including cold outreach and active market approach</li>
+                <li>Took part directly in contract closing and in aligning the technical team with the client</li>
+              </ul>
+            </div>
+
+            <div class="item">
+              <h3>Sales Trainee</h3>
+              <div class="when">September 2022 to December 2022</div>
+              <p>
+                Trainee in the commercial area, learning the fundamentals of client prospecting, technical sales,
+                proposal writing and CRM use, in preparation for taking over the company's commercial management.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="row">
+        <div class="label">Projects</div>
+        <div>
+
+          <div class="item">
+            <h3>Formula SAE chassis: simulation and mass reduction</h3>
+            <div class="where">Fórmula Del-Racing UFSJ | Altair HyperWorks</div>
+            <p>
+              Structural modelling of the Formula SAE tubular chassis. I developed the team's first 2D (shell) model of
+              the FDR-05 chassis and cross-checked it against the 1D (beam) model and the physical torsion test. The same
+              approach then supported the FDR-06 redesign, in which I took part in design, assembly and development, and
+              which reduced the chassis mass from 40 kg (FDR-05) to 29 kg.
+            </p>
+            <div class="figs">
+              <figure>
+                <img src="images/fdr05-2025.jpg" width="988" height="718" loading="lazy"
+                     alt="The FDR-05 Formula SAE car, number 15, on track at the 2025 competition">
+                <figcaption>Fig. 1. FDR-05 on track at Fórmula SAE Brasil 2025.</figcaption>
+              </figure>
+              <figure>
+                <img src="images/fdr06.jpg" width="712" height="468" loading="lazy"
+                     alt="The FDR-06 Formula SAE car on track between cones, seen from the front left">
+                <figcaption>Fig. 2. FDR-06.</figcaption>
+              </figure>
+              <figure class="wide">
+                <img src="images/chassis-3d-model.jpg" width="1072" height="672" loading="lazy"
+                     alt="Beam model of the FDR-05 tubular chassis, with tube sections shown in different colours">
+                <figcaption>Fig. 3. 1D beam model of the FDR-05 chassis, with tube sections in different colours.</figcaption>
+              </figure>
+              <figure>
+                <img src="images/chassis-2d-front-twist.jpg" width="400" height="352" loading="lazy"
+                     alt="Displacement contour plot of the 2D chassis model under front torsion">
+                <figcaption>Fig. 4. 2D shell model of the FDR-05 chassis, front torsion case: Z displacement contour.</figcaption>
+              </figure>
+              <figure>
+                <img src="images/chassis-2d-rear-twist.jpg" width="432" height="368" loading="lazy"
+                     alt="Displacement contour plot of the 2D chassis model under rear torsion">
+                <figcaption>Fig. 5. 2D shell model of the FDR-05 chassis, rear torsion case: Z displacement contour.</figcaption>
+              </figure>
+            </div>
+          </div>
+
+          <div class="item">
+            <h3>Bio-composite laminates from papaya stem fibres</h3>
+            <div class="where">CITeC, UFSJ | Scientific Initiation final report</div>
+            <p>
+              Castor-oil polyurethane matrix reinforced with papaya bast fibre layers. Two fibre layer types (inner and
+              middle) and three reinforcement morphologies (continuous without holes, continuous with alternating holes,
+              random short fibres) were compared in tension and three-point bending.
+            </p>
+            <div class="kv">
+              <div>
+                <div class="k">Tensile strength</div>
+                <div class="v">up to 126 MPa</div>
+                <div class="n">Middle layer, continuous fibre, no holes</div>
+              </div>
+              <div>
+                <div class="k">Tensile modulus</div>
+                <div class="v">up to 20.4 GPa</div>
+                <div class="n">Middle layer, continuous fibre, alternating holes</div>
+              </div>
+              <div>
+                <div class="k">Flexural strength</div>
+                <div class="v">up to 109 MPa</div>
+                <div class="n">Middle layer, continuous fibre, alternating holes</div>
+              </div>
+              <div>
+                <div class="k">Flexural modulus</div>
+                <div class="v">up to 14.2 GPa</div>
+                <div class="n">Middle layer, continuous fibre, no holes</div>
+              </div>
+            </div>
+            <p class="note">Condition means from the second fabrication batch, n = 3 to 5 specimens each. Tests per ASTM D638 and D790.</p>
+            <div class="figs">
+              <figure class="wide">
+                <img src="images/composite-laminates.jpg" width="1000" height="591" loading="lazy"
+                     alt="Finished laminates after demoulding: continuous fibre laminate and ground short fibre laminate">
+                <figcaption>Fig. 6. Finished laminates: (a) continuous fibre, middle layer; (b) ground short fibres.</figcaption>
+              </figure>
+              <figure class="wide">
+                <img src="images/composite-stress-strain.png" width="1000" height="765" loading="lazy"
+                     alt="Tensile stress-strain curves for the six experimental conditions">
+                <figcaption>Fig. 7. Tensile stress-strain curves, one specimen per condition. Legend in Portuguese: Interna = inner layer, Média = middle layer, Sem furos = no holes, Furos alternados = alternating holes, Fibras aleatórias = random fibres.</figcaption>
+              </figure>
+            </div>
+          </div>
+
+          <div class="item">
+            <h3><a href="https://github.com/peix0t0/monte-carlo-option-pricing" target="_blank" rel="noopener">Monte Carlo Option Pricing</a></h3>
+            <div class="where">Python, numerical methods applied to quantitative finance</div>
+            <p>
+              Option pricing by Monte Carlo simulation (geometric Brownian motion, Euler-Maruyama scheme,
+              variance reduction), validated against the Black-Scholes formula. Same approach as in engineering:
+              build the numerical model, then validate it against a reference.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="education">
+      <div class="row">
+        <div class="label">Education</div>
+        <div>
+          <div class="item">
+            <h3>ENSEEIHT, Toulouse INP</h3>
+            <div class="where">Engineering double-degree program, MF2E: Aerodynamics, Numerical Simulation and Fluid Mechanics (FEP)</div>
+            <div class="when">September 2026 to August 2028</div>
+            <p>CAPES/BRAFITEC scholarship.</p>
+          </div>
+          <div class="item">
+            <h3>Universidade Federal de São João del-Rei (UFSJ)</h3>
+            <div class="where">Bachelor's degree, Mechanical Engineering</div>
+            <div class="when">2022 to 2028</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="row">
+        <div class="label">Skills</div>
+        <div>
+          <div class="skills-group">
+            <h4>Simulation</h4>
+            <div class="tags"><span>Altair HyperWorks</span><span>ANSYS</span><span>ANSYS Fluent</span></div>
+          </div>
+          <div class="skills-group">
+            <h4>CAD and prototyping</h4>
+            <div class="tags"><span>SolidWorks</span><span>Fusion 360</span><span>AutoCAD</span></div>
+          </div>
+          <div class="skills-group">
+            <h4>Computing and statistics</h4>
+            <div class="tags"><span>MATLAB</span><span>Python</span><span>Minitab (ANOVA)</span></div>
+          </div>
+          <div class="skills-group">
+            <h4>Testing</h4>
+            <div class="tags"><span>Tensile and flexural testing (ASTM D638, D790)</span><span>Vibration analysis</span></div>
+          </div>
+          <div class="skills-group">
+            <h4>Methods</h4>
+            <div class="tags"><span>Lean Six Sigma Green Belt</span><span>Project management</span><span>Technical sales</span></div>
+          </div>
+          <div class="skills-group">
+            <h4>Certifications</h4>
+            <div class="tags">
+              <span>Six Sigma Green Belt</span>
+              <span>CFD Wing Design</span>
+              <span>3D Printing and Prototyping</span>
+              <span>Industrial Maintenance Asset Management</span>
+              <span>TCF B1 (French)</span>
+            </div>
+          </div>
+          <div class="skills-group">
+            <h4>Languages</h4>
+            <ul class="langs">
+              <li><span>Portuguese</span><span>Native</span></li>
+              <li><span>English</span><span>C1, Full Professional</span></li>
+              <li><span>Spanish</span><span>B2, Professional Working</span></li>
+              <li><span>French</span><span>B1, Professional Working</span></li>
+            </ul>
+          </div>
+          <div class="skills-group">
+            <h4>Interests</h4>
+            <div class="tags"><span>Motorsport</span><span>Aerospace and aerodynamics</span><span>Entrepreneurship</span><span>Quantitative finance</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="row">
+        <div class="label">Contact</div>
+        <div>
+          <p>
+            <a href="mailto:apeixoto861@gmail.com">apeixoto861@gmail.com</a>
+            &nbsp;&nbsp;
+            <a href="https://www.linkedin.com/in/andre-silva-peixoto-de-souza/" target="_blank" rel="noopener">LinkedIn</a>
+            &nbsp;&nbsp;
+            <a href="https://github.com/peix0t0" target="_blank" rel="noopener">GitHub</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <footer>
+    <div class="wrap">&copy; 2026 André Silva Peixoto de Souza</div>
+  </footer>
+
+</body>
+</html>
